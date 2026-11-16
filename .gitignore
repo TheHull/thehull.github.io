@@ -1,0 +1,22 @@
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.astro/
+src/styles/generated-theme.css
+*.tsbuildinfo
+artifacts/
+
+# Local Codex instructions and session files
+/.codex/
+/.agents/
+/AGENTS.md
+/CODEX.md
+/SESSION-HANDOFF*.md
+
+# Local placeholder pages
+/src/content/events/2026-11-09.md
+/src/content/news/2026-10-24.md

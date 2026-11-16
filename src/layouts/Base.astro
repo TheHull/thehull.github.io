@@ -1,0 +1,44 @@
+---
+import config from "@/config/config.json";
+import theme from "@/config/theme.json";
+import Header from "@/partials/Header.astro";
+import Sidebar from "@/partials/Sidebar.astro";
+import { sitePath } from "@/lib/links";
+import "@/styles/main.css";
+interface Props { title?: string; description?: string; }
+const { title, description = config.site.description } = Astro.props;
+const pageTitle = title ? title + " - " + config.site.title : config.site.title;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content={theme.background} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {config.settings.noindex && <meta name="robots" content="noindex, nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href={sitePath("favicon.svg")} type="image/svg+xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {canonical && <meta property="og:url" content={canonical} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="container">
+      <Header />
+      <div class="site-layout">
+        <Sidebar />
+        <div class="site-content">
+          <main id="main-content" tabindex="-1">
+            <slot />
+          </main>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

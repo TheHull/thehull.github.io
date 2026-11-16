@@ -1,0 +1,27 @@
+{
+  "name": "2026-nexus",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The Hull: an informal doctoral network in cryptographic coding theory.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/themeGenerator.js && astro dev",
+    "build": "node scripts/themeGenerator.js && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "7.1.4",
+    "entities": "6.0.1",
+    "ultrahtml": "1.7.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@tailwindcss/vite": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,15 @@
+---
+import { sitePath } from "@/lib/links";
+
+interface Props {
+  image: { src: string; alt: string };
+  href?: string;
+}
+const { image, href } = Astro.props;
+const src = /^https?:\/\//.test(image.src) ? image.src : sitePath(image.src);
+---
+{href
+  ? <a class="preview-image" href={href} tabindex="-1">
+      <img src={src} alt={image.alt} width="160" height="120" loading="lazy" decoding="async" />
+    </a>
+  : <img class="content-image" src={src} alt={image.alt} width="960" height="540" decoding="async" />}

@@ -1,0 +1,25 @@
+---
+import { render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import EventList from "@/components/EventList.astro";
+import { getEvents } from "@/lib/events";
+import { getPage } from "@/lib/pages";
+
+const page = await getPage("events");
+const { Content } = await render(page);
+const { upcoming, past } = await getEvents();
+---
+<Base title={page.data.title}>
+  <h1>{page.data.title}</h1>
+  <div class="prose"><Content /></div>
+  <section>
+    <h2>{page.data.upcoming}</h2>
+    {upcoming.length > 0
+      ? <EventList events={upcoming} />
+      : <p>{page.data.empty}</p>}
+  </section>
+  {past.length > 0 && <section>
+    <h2>{page.data.past}</h2>
+    <EventList events={past} />
+  </section>}
+</Base>

@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import { getCollection, render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import ContentImage from "@/components/ContentImage.astro";
+import { contentDate } from "@/lib/dates";
+import { sitePath } from "@/lib/links";
+import { excerpt } from "@/lib/excerpts";
+import { getPage } from "@/lib/pages";
+
+export const getStaticPaths = (async () => {
+  const news = await getCollection("news");
+  return news.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const page = await getPage("news");
+---
+<Base title={entry.data.title} description={excerpt(entry) || undefined}>
+  <p><a href={sitePath("news/")}>← {page.data.all}</a></p>
+  <article>
+    <h1>{entry.data.title}</h1>
+    <p class="metadata"><time datetime={entry.id}>{contentDate(entry.id)}</time></p>
+    {entry.data.image && <ContentImage image={entry.data.image} />}
+    <div class="prose"><Content /></div>
+  </article>
+</Base>

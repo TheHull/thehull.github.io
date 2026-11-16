@@ -1,0 +1,37 @@
+---
+import { getEntry, render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import EventList from "@/components/EventList.astro";
+import NewsList from "@/components/NewsList.astro";
+import { getEvents } from "@/lib/events";
+import { getNews } from "@/lib/news";
+import { getPage } from "@/lib/pages";
+import { sitePath } from "@/lib/links";
+
+const homepage = await getEntry("homepage", "home");
+if (!homepage) throw new Error("Missing src/content/homepage/home.md");
+const { Content } = await render(homepage);
+const eventPage = await getPage("events");
+const newsPage = await getPage("news");
+const { upcoming } = await getEvents();
+const news = await getNews();
+---
+<Base>
+  <div class="prose"><Content /></div>
+  <section id="events" class="home-section">
+    <div class="section-heading">
+      <h2>{eventPage.data.upcoming}</h2>
+      <a href={sitePath("events/")}>{eventPage.data.all}</a>
+    </div>
+    {upcoming.length > 0
+      ? <EventList events={upcoming.slice(0, 4)} />
+      : <p>{eventPage.data.empty}</p>}
+  </section>
+  <section id="news" class="home-section">
+    <div class="section-heading">
+      <h2>{newsPage.data.title}</h2>
+      <a href={sitePath("news/")}>{newsPage.data.all}</a>
+    </div>
+    {news.length > 0 ? <NewsList news={news.slice(0, 3)} /> : <p>{newsPage.data.empty}</p>}
+  </section>
+</Base>

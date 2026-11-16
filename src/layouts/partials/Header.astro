@@ -1,0 +1,39 @@
+---
+import config from "@/config/config.json";
+import { sitePath } from "@/lib/links";
+import Navigation from "./Navigation.astro";
+
+const Tag = Astro.url.pathname === sitePath() ? "h1" : "p";
+---
+<header class="site-toolbar">
+  <Tag class="site-title"><a href={sitePath()}>{config.site.title}</a></Tag>
+  <a class="join-link desktop-join" href={config.site.interest_url}>Join the network</a>
+  <details class="mobile-menu">
+    <summary aria-label="Toggle navigation">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </summary>
+    <div class="menu-panel">
+      <Navigation />
+      <a class="mobile-join" href={config.site.interest_url}>Join the network</a>
+    </div>
+  </details>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>(".mobile-menu");
+  if (menu) {
+    menu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    });
+  }
+</script>

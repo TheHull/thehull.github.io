@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { contentDate } from "@/lib/dates";
+import { excerptHtml } from "@/lib/excerpts";
+import { sitePath } from "@/lib/links";
+import ContentImage from "./ContentImage.astro";
+
+interface Props { news: CollectionEntry<"news">[]; }
+const { news } = Astro.props;
+---
+<div class="news-list">
+  {news.map((entry) => {
+    const href = sitePath("news/" + entry.id + "/");
+    return <article class:list={["entry-preview", { "has-image": entry.data.image }]}>
+      {entry.data.image && <ContentImage image={entry.data.image} href={href} />}
+      <div class="preview-content">
+        <h3><a href={href}>{entry.data.title}</a></h3>
+        <p class="metadata"><time datetime={entry.id}>{contentDate(entry.id)}</time></p>
+        <p class="excerpt" set:html={excerptHtml(entry, { base: sitePath(), permalink: href })} />
+      </div>
+    </article>;
+  })}
+</div>

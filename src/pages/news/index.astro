@@ -1,0 +1,16 @@
+---
+import { render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import NewsList from "@/components/NewsList.astro";
+import { getNews } from "@/lib/news";
+import { getPage } from "@/lib/pages";
+
+const page = await getPage("news");
+const { Content } = await render(page);
+const news = await getNews();
+---
+<Base title={page.data.title}>
+  <h1>{page.data.title}</h1>
+  <div class="prose"><Content /></div>
+  {news.length > 0 ? <NewsList news={news} /> : <p>{page.data.empty}</p>}
+</Base>

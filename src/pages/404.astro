@@ -1,0 +1,14 @@
+---
+import { render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import { getPage } from "@/lib/pages";
+import { sitePath } from "@/lib/links";
+
+const page = await getPage("404");
+const { Content } = await render(page);
+---
+<Base title={page.data.title}>
+  <h1>{page.data.title}</h1>
+  <div class="prose"><Content /></div>
+  <p><a href={sitePath()}>{page.data.back}</a></p>
+</Base>

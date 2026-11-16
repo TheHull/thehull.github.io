@@ -1,0 +1,12 @@
+---
+import { render } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import { getPage } from "@/lib/pages";
+
+const page = await getPage("contacts");
+const { Content } = await render(page);
+---
+<Base title={page.data.title}>
+  <h1>{page.data.title}</h1>
+  <div class="prose contact-content"><Content /></div>
+</Base>
