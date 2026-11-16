@@ -4,11 +4,11 @@ title: "Contacts"
 
 **Leonardo Errati**  
 Politecnico di Torino  
-[leonardo.errati@polito.it](mailto:leonardo.errati@polito.it)
+leonardo.errati [at] polito.it
 
 **Laura Mattiuz**  
 Università Politecnica delle Marche  
-[l.mattiuz@pm.univpm.it](mailto:l.mattiuz@pm.univpm.it)
+l.mattiuz [at] pm.univpm.it
 
 ## Mailing list
 
